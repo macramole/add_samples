@@ -12,7 +12,14 @@ def process(file, aclew_data, t=5, start=30, n=5):
     length = int(float(aclew_data.length_of_recording))
 
 
+
     eaf = pympi.Eaf(file)
+
+    existing_nums = [int(x) for _, _, x in eaf.get_annotation_data_for_tier("code_num")]
+    existing_nums.sort()
+    last_n = existing_nums[-1]
+    new_n = last_n + 1
+
     existing = [(x / 60000, y / 60000)
                 for x, y, _ in
                 eaf.get_annotation_data_for_tier('context')]
@@ -27,7 +34,7 @@ def process(file, aclew_data, t=5, start=30, n=5):
             existing.append((x, x + 5))
             i += 1
 
-    rand_ints = list(range(6, 6 + n))
+    rand_ints = list(range(new_n, new_n + n))
     shuffle(rand_ints)
 
     for x in zip(existing[-n:], rand_ints):
