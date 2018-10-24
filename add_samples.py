@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import os
 from random import shuffle
@@ -20,11 +22,11 @@ def process(file, aclew_data, t=5, start=30, n=5):
     last_n = existing_nums[-1]
     new_n = last_n + 1
 
-    existing = [(x / 60000, y / 60000)
+    existing = [(x // 60000, y // 60000)
                 for x, y, _ in
                 eaf.get_annotation_data_for_tier('context')]
 
-    minute_range = range(start, length - t)
+    minute_range = list(range(start, length - t))
     shuffle(minute_range)
     i = 0
     for x in minute_range:
